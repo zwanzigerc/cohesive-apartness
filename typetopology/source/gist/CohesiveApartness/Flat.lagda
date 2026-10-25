@@ -4,10 +4,10 @@ gist.CohesiveApartness.index.
 
 The flat modality ♭ of spatial type theory [1], as provided by Agda's
 --cohesion flag, together with the few notions about it that we need
-in gist.CohesiveApartness.TightApartness: discrete types, crisp
-excluded middle, null types, Shulman's Axioms C0 and C1 [1, §8], and
-the single-generator variant of Axiom C1 used on the nLab [2], which
-we call singly generated punctual cohesion.
+in this folder: discrete types, crisp excluded middle, null types,
+Shulman's Axioms C0 and C1 [1, §8], and the single-generator variant
+of Axiom C1 used on the nLab [2], which we call singly generated
+punctual cohesion.
 
 A variable annotated with @♭ is crisp. In Shulman's notation [1] a
 crisp variable x of type A is written x :: A. Only crisp variables
@@ -17,6 +17,7 @@ may be used in any position where an ordinary one may be used.
 [1] Michael Shulman. Brouwer's fixed-point theorem in real-cohesive
     homotopy type theory. Mathematical Structures in Computer
     Science 28(6), 856–941, 2018. https://arxiv.org/abs/1509.07584
+    Numbering as in version 3 of the arXiv preprint.
 
 [2] nLab. Axiom of punctual cohesion.
     https://ncatlab.org/nlab/show/axiom+of+punctual+cohesion
@@ -57,9 +58,11 @@ a ^♭ gives a crisp element a of A. This is ♭-induction into an
 arbitrary, possibly non-crisp, family of types, which is how ♭ is
 eliminated in [1].
 
-We never do case analysis on crisp elements of inductive types (Agda's
---flat-split), because --flat-split is not available together with
---safe and --without-K.
+This module never does case analysis on crisp elements of inductive
+types, which needs Agda's flag --flat-split, because --flat-split is
+not available together with --safe and --without-K. The one place in
+this folder where we need it is isolated in
+gist.CohesiveApartness.FlatSplit.
 
 A crisp type is discrete if the counit is an equivalence [1]. We say
 "♭-discrete", because in TypeTopology "discrete" means "has decidable
@@ -82,12 +85,13 @@ Crisp-EM 𝓤 = (@♭ P : 𝓤 ̇ ) → @♭ is-prop P → P + ¬ P
 
 \end{code}
 
-Under crisp excluded middle, every ♭-discrete crisp set is discrete in
-the sense of TypeTopology. For crisp u and v, the proposition u ＝ v
-is crisp, and hence decided by crisp excluded middle. An arbitrary
-element of a ♭-discrete type is of the form ♭-counit (u ^♭) for a
-crisp u. Compare [1, Lemma 8.15], which, assuming also axiom C1,
-characterizes the discrete sets as the sets with decidable equality.
+Under crisp excluded middle, every ♭-discrete crisp set, with a crisp
+proof that it is a set, is discrete in the sense of TypeTopology. For
+crisp u and v, the proposition u ＝ v is crisp, and hence decided by
+crisp excluded middle. An arbitrary element of a ♭-discrete type is
+of the form ♭-counit (u ^♭) for a crisp u. Compare [1, Lemma 8.15],
+which, assuming also Axiom C1, characterizes the discrete sets as the
+sets with decidable equality.
 
 \begin{code}
 
@@ -109,7 +113,7 @@ characterizes the discrete sets as the sets with decidable equality.
 
 \end{code}
 
-If the type Ω 𝓤 of propositions is ♭-discrete, or merely if the
+If the type Ω 𝓤 of propositions is ♭-discrete, or even just if the
 counit ♭ (Ω 𝓤) → Ω 𝓤 has a section, then crisp excluded middle gives
 excluded middle, because then every proposition is (equal to) a crisp
 one.
@@ -133,7 +137,7 @@ one.
 Null types. A type A is null with respect to a type B if the map
 A → (B → A) that sends a to the constant function with value a is an
 equivalence. If B is pointed by b, this amounts to every map f : B → A
-satisfying f x ＝ f b for all x [1, Lemma 8.7].
+satisfying f x ＝ f b for all x (compare [1, Lemma 8.7]).
 
 \begin{code}
 
@@ -161,7 +165,8 @@ family of generators. Axiom C0 asks for a family R of types such that
 a crisp type is discrete if and only if it is null with respect to
 every R j. Shulman asks the family to be crisp; we don't, because we
 never need this, so our results apply in particular to crisp families.
-(Shulman writes I for the index type, which we call J.)
+(Shulman writes I for the index type, which we call J. Below, as on
+the nLab, I is a generator.)
 
 \begin{code}
 
@@ -200,19 +205,17 @@ that maps from I to types of the form Disc(T) are constant, losing
 the direction that I detects discreteness. Moreover, the page defines
 discreteness using a canonical function ♭(−) : A → ♭A, whereas the
 canonical function goes the other way, ♭A → A (our ♭-counit). We
-repair the definition
-by reading it in Shulman's single-mode spatial type theory: a crisp
-type A is ♭-discrete if and only if every function from I into A is
-constant. We read "every function f from I into A is constant" as
-(i : I) → f i ＝ f p, which for a pointed type I is equivalent to the
-other usual readings, and, by null-iff-maps-are-constant, to A being
-null with respect to I.
+repair the definition by reading it in Shulman's single-mode spatial
+type theory: a crisp type A is ♭-discrete if and only if every
+function from I into A is constant. We read "every function f from I
+into A is constant" as (i : I) → f i ＝ f p, which for a pointed type
+I is equivalent to the other usual readings, and, by
+null-iff-maps-are-constant, to A being null with respect to I.
 
 To distinguish the repaired definition from Shulman's Axiom C1, we
-call it singly generated punctual cohesion. (The nLab writes I for the
-generator itself.) In real cohesion [1], there is a single generator,
-the type of real numbers, pointed by 0, and the axiom is Shulman's
-Axiom R♭.
+call it singly generated punctual cohesion. In real cohesion [1],
+there is a single generator, the type of real numbers, pointed by 0,
+and the axiom is Shulman's Axiom R♭.
 
 \begin{code}
 

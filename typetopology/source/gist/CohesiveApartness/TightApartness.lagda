@@ -2,9 +2,9 @@ Claude Opus 5.5, an AI model made by Anthropic, prompted by Colin
 Zwanziger, 25 October 2026. See the AI disclosure in
 gist.CohesiveApartness.index.
 
-We discuss the first two open problems listed in the section "In
-cohesive homotopy type theory" of the nLab page [1], which read as
-follows (24 October 2026):
+We discuss the two open problems listed in the section "In cohesive
+homotopy type theory" of the nLab page [1], which read as follows
+(24 October 2026):
 
  (1) Suppose a discrete cohesive type A comes with a tight apartness
      relation. Then, assuming crisp excluded middle and axiom C1, is
@@ -24,17 +24,20 @@ definition, which we call singly generated punctual cohesion. We take
 Shulman's paper [2], where Axioms C0, C1 and C2 come from, as the
 authority on Axiom C1. There, the discrete types are characterized by
 a family of pointed generators, and the nLab definition is the case of
-a single generator (see gist.CohesiveApartness.Flat). We give our main
-results for both definitions.
+a single generator. We give our main results for both definitions.
 
 How we read the problems.
 
- * We formulate both principles for crisp types A, which is the
+ * We formulate both statements for crisp types A, which is the
    setting in which spatial type theory provides ♭A and the
-   ♭-discreteness of A. The tight apartness relation, on the other
-   hand, is arbitrary: it is an ordinary, not necessarily crisp,
-   variable. Nothing in the problems says that it is crisp, and if it
-   were, problem (1) would be trivial.
+   ♭-discreteness of A. In (1), we also take the proof that A is
+   ♭-discrete to be crisp. Under Shulman's Axiom C1 this is no
+   restriction [2, Lemma 8.10], and our results hold for either
+   reading anyway, since excluded middle implies the stronger one.
+   The tight apartness relation, on the other hand, is arbitrary: it
+   is an ordinary, not necessarily crisp, variable. Nothing in the
+   problems says that it is crisp, and if it were, problem (1) would
+   be trivial.
 
  * A relation _♯_ on a crisp type X is crisp if it is pointwise
    logically equivalent to ♭-counit r for some crisp relation r, that
@@ -53,12 +56,13 @@ The two problems thus become the types
 
 defined below. Here is what we show.
 
- (a) Excluded middle implies both statements. This uses the result
-     EM-gives-tight-apartness-is-≠ of Apartness.Properties.
+ (a) Excluded middle implies both statements. For the first, this uses
+     the result EM-gives-tight-apartness-is-≠ of Apartness.Properties.
 
  (b) For 𝓤 = 𝓤₀, each statement implies double negation elimination
      for propositions in 𝓥. For the first we assume crisp excluded
-     middle and that the booleans 𝟚 are ♭-discrete; the second needs no
+     middle and that the booleans 𝟚 are ♭-discrete (a theorem of [2],
+     taken as a hypothesis here; see below); the second needs no
      assumption. This uses the tight apartness on 𝟚 with ₀ apart from
      ₁ precisely when a given ¬¬-dense proposition holds. The
      construction is due to Andrew Swan: following his idea, Tom de
@@ -67,10 +71,11 @@ defined below. Here is what we show.
      discrete type with two distinct points [4]. It is formalized in
      Apartness.Properties.
 
-     A second proof of the first half of (b) applies directly the
-     theorem of Apartness.Properties that a discrete type with two
-     distinct points and at most one tight apartness relation gives
-     double negation elimination.
+     A second proof of the first half of (b), for 𝓥 = 𝓤₀ and assuming
+     propositional extensionality, applies directly the theorem of
+     Apartness.Properties that a discrete type with two distinct points
+     and at most one tight apartness relation gives double negation
+     elimination.
 
      So, over crisp excluded middle, each statement is equivalent to
      excluded middle (in the cohesive mode).
@@ -97,7 +102,7 @@ defined below. Here is what we show.
      p = 0 and q = 1. More generally, both statements fail as soon as
      some type with two distinct points has only constant maps to 𝟚
      (for the first statement assuming crisp excluded middle and that
-     𝟚 is ♭-discrete), which needs no form of axiom C1.
+     𝟚 is ♭-discrete). This needs no form of axiom C1.
 
 So, for either definition of axiom C1, the answer to both problems is
 negative in the sense that crisp excluded middle and axiom C1 don't
@@ -109,9 +114,12 @@ only generator is a singleton and excluded middle holds. The
 model-theoretic claims in this paragraph are not formalized here.
 
 The fact that 𝟚 = 𝟙 + 𝟙 is ♭-discrete follows from [2, Theorems 6.19
-and 6.21], which rest on the crisp induction principles of [2, §5].
-In Agda, crisp induction on 𝟚 requires --flat-split, which is not
-available with --safe and --without-K. We therefore take it as a
+and 6.21], the second of which rests on the crisp induction principles
+of [2, §5]. In Agda, crisp induction on 𝟚 requires --flat-split, which
+is not available with --safe and --without-K. We therefore take the
+♭-discreteness of 𝟚 as a hypothesis here. The module
+gist.CohesiveApartness.FlatSplit, which uses --flat-split and is not
+--safe, proves it and restates the main theorems without this
 hypothesis.
 
 [1] nLab. Open problems in homotopy type theory.
@@ -120,6 +128,7 @@ hypothesis.
 [2] Michael Shulman. Brouwer's fixed-point theorem in real-cohesive
     homotopy type theory. Mathematical Structures in Computer
     Science 28(6), 856–941, 2018. https://arxiv.org/abs/1509.07584
+    Numbering as in version 3 of the arXiv preprint.
 
 [3] nLab. Axiom of punctual cohesion (axiom C1).
     https://ncatlab.org/nlab/show/axiom+of+punctual+cohesion
@@ -419,8 +428,9 @@ induced-apartnesses-on-♭-are-decidable-gives-DNE φ P P-is-prop ¬¬P = γ δ
 
 \end{code}
 
-Summing up: over crisp excluded middle, each statement is equivalent to
-excluded middle.
+Summing up: the second statement is equivalent to excluded middle, and
+so is the first, over crisp excluded middle and assuming that 𝟚 is
+♭-discrete.
 
 \begin{code}
 
@@ -445,15 +455,15 @@ induced-apartnesses-on-♭-are-decidable-iff-EM =
 
 \end{code}
 
-Refutations under minimal hypotheses.
-Suppose that a type I has two distinct points, and that every map
-from I to 𝟚 is constant. Then excluded middle fails, because the
-characteristic function of the first point, which excluded middle
-would provide, separates the two points. Hence both statements fail.
-For the first we assume crisp excluded middle and that 𝟚 is
-♭-discrete; the second needs neither. Neither axiom C1 nor that I is
-a set is needed. The refutations from Shulman's Axiom C2 and from
-singly generated punctual cohesion below are instances.
+Refutations under minimal hypotheses. Suppose that a type I has two
+distinct points, and that every map from I to 𝟚 is constant. Then
+excluded middle fails, because the characteristic function of the
+first point, which excluded middle would provide, separates the two
+points. Hence both statements fail. For the first we assume crisp
+excluded middle and that 𝟚 is ♭-discrete; the second needs neither.
+We need neither axiom C1 nor the assumption that I is a set. The
+refutations from Shulman's Axiom C2 and from singly generated
+punctual cohesion below are instances.
 
 \begin{code}
 
@@ -512,8 +522,8 @@ module _ {@♭ 𝓦 : Universe}
 
 For comparison, here are the special cases in which the apartness
 relation is crisp, where crisp excluded middle suffices. The first is
-a crisp version of EM-gives-tight-apartness-is-≠. In the second,
-neither tightness nor axiom C1 is needed.
+a crisp version of EM-gives-tight-apartness-is-≠. Neither uses axiom
+C1, and the second doesn't use tightness.
 
 \begin{code}
 
@@ -804,8 +814,8 @@ p, because the characteristic function of p is a map I → 𝟚.
 \end{code}
 
 Conversely, if every point of I is equal to p, then every map I → Ω 𝓥
-is constant, and so Ω 𝓥 is ♭-discrete by singly generated punctual
-cohesion, and hence crisp excluded middle gives excluded middle.
+is constant, so Ω 𝓥 is ♭-discrete by singly generated punctual
+cohesion. Hence crisp excluded middle gives excluded middle.
 
 \begin{code}
 
