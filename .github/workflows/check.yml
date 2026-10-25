@@ -1,0 +1,34 @@
+name: Type-check
+
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    env:
+      LC_ALL: C.UTF-8
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install Agda 2.8.0
+        run: |
+          curl -sSL -o agda.tar.xz \
+            https://github.com/agda/agda/releases/download/v2.8.0/Agda-v2.8.0-linux.tar.xz
+          mkdir -p "$HOME/agda-bin"
+          tar -xf agda.tar.xz -C "$HOME/agda-bin"
+          echo "$HOME/agda-bin" >> "$GITHUB_PATH"
+
+      - name: Check the standalone version
+        working-directory: standalone
+        run: agda --version && agda CohesiveApartness.agda
+
+      - name: Check the TypeTopology version
+        run: |
+          git clone https://github.com/martinescardo/TypeTopology.git tt
+          cd tt
+          git checkout 52ed2eb58d72a6bab0dd70480fa73e2291b08219
+          cp -r ../typetopology/source/gist/CohesiveApartness source/gist/
+          agda source/gist/CohesiveApartness/index.lagda
