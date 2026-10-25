@@ -13,7 +13,7 @@ unless the maintainers decide otherwise.
 Acknowledgement. We thank GPT-6 Astra for reviewing the
 formalization.
 
-This folder studies the first two open problems listed in the section
+This folder studies the two open problems listed in the section
 "In cohesive homotopy type theory" of the nLab page
 
  https://ncatlab.org/nlab/show/open+problems+in+homotopy+type+theory
@@ -30,10 +30,11 @@ results.
 
  * gist.CohesiveApartness.TightApartness formulates the two problems
    and shows that, over crisp excluded middle, each is equivalent to
-   excluded middle. Under Shulman's Axiom C1, each is equivalent to
-   every generator being 0-connected, and under singly generated
-   punctual cohesion to the generator being 0-connected. Both
-   statements are refuted by Shulman's Axiom C2. Some of these
+   excluded middle. Assuming also propositional extensionality, each
+   is then equivalent, under Shulman's Axiom C1, to every generator
+   being 0-connected, and under singly generated punctual cohesion to
+   the generator being 0-connected. Shulman's Axiom C2 refutes both
+   statements (the first over crisp excluded middle). Some of these
    results assume that 𝟚 is ♭-discrete, a theorem of Shulman's type
    theory whose proof needs crisp induction.
 
@@ -45,8 +46,9 @@ results.
 
 The problems were posed by the nLab contributor Anonymouse, using the
 nLab's definition of axiom C1, so technically they refer to singly
-generated punctual cohesion. We take Shulman's paper as the authority
-on Axiom C1, and give the main results for both definitions.
+generated punctual cohesion. We take Shulman's paper (arXiv:1509.07584)
+as the authority on Axiom C1, and give the main results for both
+definitions.
 
 The modules here use Agda's flag --cohesion, which provides the flat
 modality and crisp variables. Because --cohesion is infective, every
