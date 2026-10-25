@@ -55,8 +55,8 @@ excluded middle in the cohesive mode. Both are false in real cohesion.
     needed.
 - **Refutations.** Both statements fail as soon as some type with two
   distinct points has only constant maps to Bool (for the first statement,
-  assuming crisp excluded middle and that Bool is ♭-discrete). This needs no
-  form of axiom C1. In particular, Shulman's Axiom C2 refutes both, as in
+  assuming crisp excluded middle and that Bool is ♭-discrete, which
+  `FlatSplit.lagda` proves). This needs no form of axiom C1. In particular, Shulman's Axiom C2 refutes both, as in
   real cohesion, whose generator ℝ has 0 ≠ 1.
 - **Not formalized.** Both statements hold in the degenerate model in which
   ♭ is the identity, the only generator is a singleton and excluded middle
@@ -65,18 +65,19 @@ excluded middle in the cohesive mode. Both are false in real cohesion.
 
 ## Files
 
-- `typetopology/source/gist/CohesiveApartness/`: the main formalization,
-  written in TypeTopology's style (`index.lagda`, `Flat.lagda`,
-  `TightApartness.lagda`), with `--safe --without-K --cohesion`. That Bool is
-  ♭-discrete (Shulman, Theorems 6.19 and 6.21) is a hypothesis, because its
-  proof needs crisp induction (`--flat-split`), which isn't available with
-  `--safe --without-K`.
+- `typetopology/source/gist/CohesiveApartness/`: the formalization, written
+  in TypeTopology's style.
+  - `index.lagda`, `Flat.lagda` and `TightApartness.lagda` use
+    `--safe --without-K --cohesion`. Some results there assume that Bool is
+    ♭-discrete (Shulman, Theorems 6.19 and 6.21), because its proof needs
+    crisp induction (`--flat-split`), which Agda's `--safe` mode doesn't
+    allow together with `--without-K`.
+  - `FlatSplit.lagda` is the one module that uses `--flat-split`. It proves
+    that Bool is ♭-discrete and restates the main theorems without that
+    assumption. It is not `--safe`, so the index doesn't import it, and it
+    is checked separately.
 - `typetopology/cohesive-apartness.patch`: the same folder, as a patch
   against TypeTopology.
-- `standalone/CohesiveApartness.agda`: an earlier, self-contained version
-  (single generator only). It uses
-  `--without-K --cohesion --flat-split` and postulates propositional
-  truncation.
 
 This is not a contribution to TypeTopology: TypeTopology's `AI-Policy.md`
 says that AI generated Agda code or prose won't be considered. Also,
@@ -86,18 +87,14 @@ changes.
 
 ## Checking
 
-The workflow in `.github/workflows/check.yml` type-checks both versions
-with Agda 2.8.0. To check by hand:
+The workflow in `.github/workflows/check.yml` type-checks the folder with
+Agda 2.8.0. To check by hand:
 
 ```sh
-# TypeTopology version
 git clone https://github.com/martinescardo/TypeTopology.git
 cd TypeTopology
 git checkout 52ed2eb58d72a6bab0dd70480fa73e2291b08219
 cp -r ../cohesive-apartness/typetopology/source/gist/CohesiveApartness source/gist/
 agda source/gist/CohesiveApartness/index.lagda
-
-# Standalone version (also checks with Agda 2.6.3)
-cd ../cohesive-apartness/standalone
-agda CohesiveApartness.agda
+agda source/gist/CohesiveApartness/FlatSplit.lagda
 ```

@@ -21,14 +21,12 @@ jobs:
           tar -xf agda.tar.xz -C "$HOME/agda-bin"
           echo "$HOME/agda-bin" >> "$GITHUB_PATH"
 
-      - name: Check the standalone version
-        working-directory: standalone
-        run: agda --version && agda CohesiveApartness.agda
-
-      - name: Check the TypeTopology version
+      - name: Check the formalization against TypeTopology
         run: |
+          agda --version
           git clone https://github.com/martinescardo/TypeTopology.git tt
           cd tt
           git checkout 52ed2eb58d72a6bab0dd70480fa73e2291b08219
           cp -r ../typetopology/source/gist/CohesiveApartness source/gist/
           agda source/gist/CohesiveApartness/index.lagda
+          agda source/gist/CohesiveApartness/FlatSplit.lagda

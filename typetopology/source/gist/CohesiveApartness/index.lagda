@@ -33,7 +33,15 @@ results.
    excluded middle. Under Shulman's Axiom C1, each is equivalent to
    every generator being 0-connected, and under singly generated
    punctual cohesion to the generator being 0-connected. Both
-   statements are refuted by Shulman's Axiom C2.
+   statements are refuted by Shulman's Axiom C2. Some of these
+   results assume that 𝟚 is ♭-discrete, a theorem of Shulman's type
+   theory whose proof needs crisp induction.
+
+ * gist.CohesiveApartness.FlatSplit proves that 𝟚 is ♭-discrete,
+   using Agda's flag --flat-split, and restates the main theorems
+   without that assumption. Agda doesn't allow --flat-split together
+   with --safe and --without-K, so this module is not --safe. It is
+   therefore not imported here and has to be checked separately.
 
 The problems were posed by the nLab contributor Anonymouse, using the
 nLab's definition of axiom C1, so technically they refer to singly

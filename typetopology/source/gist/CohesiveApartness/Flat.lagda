@@ -58,8 +58,9 @@ arbitrary, possibly non-crisp, family of types, which is how ♭ is
 eliminated in [1].
 
 We never do case analysis on crisp elements of inductive types (Agda's
---flat-split), because --flat-split is not available together with
---safe and --without-K.
+--flat-split) here, because --flat-split is not available together
+with --safe and --without-K. The one place where we need it is
+isolated in gist.CohesiveApartness.FlatSplit.
 
 A crisp type is discrete if the counit is an equivalence [1]. We say
 "♭-discrete", because in TypeTopology "discrete" means "has decidable

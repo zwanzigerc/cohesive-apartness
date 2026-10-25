@@ -112,7 +112,9 @@ The fact that 𝟚 = 𝟙 + 𝟙 is ♭-discrete follows from [2, Theorems 6.19
 and 6.21], which rest on the crisp induction principles of [2, §5].
 In Agda, crisp induction on 𝟚 requires --flat-split, which is not
 available with --safe and --without-K. We therefore take it as a
-hypothesis.
+hypothesis here. The module gist.CohesiveApartness.FlatSplit, which
+uses --flat-split and is not --safe, proves it and restates the main
+theorems without it.
 
 [1] nLab. Open problems in homotopy type theory.
     https://ncatlab.org/nlab/show/open+problems+in+homotopy+type+theory
