@@ -1,6 +1,6 @@
 # Tight apartness relations in cohesive type theory
 
-Answers, with Agda formalizations, to the first two open problems listed
+Answers, with Agda formalizations, to two open problems listed
 under "In cohesive homotopy type theory" on the nLab page
 [open problems in homotopy type theory](https://ncatlab.org/nlab/show/open+problems+in+homotopy+type+theory).
 
